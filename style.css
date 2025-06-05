@@ -8,7 +8,14 @@ body {
   color: #333;
 }
 
-h1, h2 {
+h1 {
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+h2 {
   color: #222;
   margin-top: 2rem;
 }
