@@ -18,30 +18,20 @@
     And unlike conventional diffusion models, this implementation enables refinement <strong>without intermediate renoising!</strong>
   </p>
 
-  <h2>✨ Unique features:</h2>
+  <h2>Features:</h2>
+  <h3>Unique to this model</h3>
   <ul>
     <li><strong>Noiseless convergence:</strong> For simple questions, the model can converge without intermediate noising.</li>
     <li><strong>Reduced inference cost:</strong> Many queries resolve in fewer steps than the output token length.</li>
     <li><strong>Etremely efficient training:</strong> Finetuned via LoRA in a few hours on a single GPU.</li>
   </ul>
 
-  <h2>✨ Diffusion features:</h2>
+  <h3>Inherent diffusion features:</h3>
   <ul>
-    <li><strong>Noiseless convergence:</strong> The model can converge without intermediate noising.</li>
     <li><strong>Scalable test-time compute:</strong> More iterations improve response quality.</li>
-    <li><strong>Reduced inference cost:</strong> Many queries resolve in fewer steps than the output token length.</li>
-    <li><strong>Efficient training:</strong> Finetuned via LoRA in hours on a single GPU.</li>
+    <li><strong>Reverse reasoning:</strong> Supports non-sequential updates, allowing reasoning from right to left.</li>
+    <li><strong>Error correction:</strong> Initial erroneous tokens can be corrected.</li>
   </ul>
-
-  <h2>🚀 Live Demo</h2>
-  <p>Try it here:</p>
-  <iframe
-    src="https://ruurd-tini-lad.hf.space"
-    frameborder="0"
-    width="50%"
-    height="300"
-    style="border: 1px solid #ccc; border-radius: 8px;"
-  ></iframe>
 
   <h2>🔧 Settings Overview</h2>
   <ul>
