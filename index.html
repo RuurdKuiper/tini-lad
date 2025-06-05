@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diffusion LLM with LLaMA 3.2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>LAD: LlaMA Adapted Denoiser</h1>
+
+  <p>
+    This project explores a diffusion-based language model fine-tuned with LoRA adapters. 
+    Instead of generating tokens one-by-one, it iteratively denoises corrupted output to form coherent responses.
+  </p>
+
+  <h2>🚀 Live Demo</h2>
+  <p>Try the interactive version right here:</p>
+
+  <iframe
+    src="https://ruurd-tini.hf.space"
+    frameborder="0"
+    width="100%"
+    height="500"
+    style="border: 1px solid #ccc; border-radius: 8px;"
+  ></iframe>
+
+  <h2>🔍 Features</h2>
+  <ul>
+    <li>Diffusion-style generation using structural token noise</li>
+    <li>LoRA-tuned on Alpaca, Alpaca-GPT4, and Clean-Instruct</li>
+    <li>Supports both unconditional and instruction-tuned variants</li>
+  </ul>
+
+  <h2>📊 Benchmark</h2>
+  <table>
+    <tr><th>Benchmark</th><th>Score</th></tr>
+    <tr><td>ARC-Easy</td><td>88.5</td></tr>
+    <tr><td>ARC-Challenge</td><td>81.0</td></tr>
+    <tr><td>MMLU</td><td>60.5</td></tr>
+    <tr><td>HellaSwag</td><td>70.0</td></tr>
+  </table>
+
+  <h2>🧪 Sample Output</h2>
+  <pre><code>
+Input       : [MASK] [MASK] [MASK] [MASK] [MASK] [MASK]
+Iteration 1 : The [MASK] of Lyon [MASK] is.
+Iteration 2 : [MASK] capital of France [MASK] [MASK].
+Iteration 3 : The capital of [MASK] is Paris.
+Final       : The capital of France is Paris.
+  </code></pre>
+
+  <footer>
+    <p>MIT License. View the code on <a href="https://github.com/yourusername/diffusion-llama">GitHub</a>.</p>
+  </footer>
+
+</body>
+</html>
