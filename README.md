@@ -1,4 +1,4 @@
-# 🌀 Diffusion Language Modeling with LlaMA Adapted Denoiser (LAD)
+# Diffusion Language Modeling with LlaMA Adapted Denoiser (LAD)
 
 Note: Paper coming out soon; if anyone is interested in discussing the model, please contact me.
 
