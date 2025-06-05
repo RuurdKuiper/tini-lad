@@ -3,57 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Diffusion LLM with LLaMA 3.2</title>
+  <title>LAD: Llama Adapted Diffusion</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>LAD: LlaMA Adapted Denoiser</h1>
+  <h1>Diffusion Language Model Demo</h1>
+
+  <p><strong>Note:</strong> Paper coming out soon. If you're interested in discussing the model, feel free to reach out.</p>
 
   <p>
-    This project explores a diffusion-based language model fine-tuned with LoRA adapters. 
-    Instead of generating tokens one-by-one, it iteratively denoises corrupted output to form coherent responses.
+    This is an interactive demo of a <strong>diffusion-style language model</strong> built on LLaMA 3.1 8B and fine-tuned with LoRA adapters.
+    Unlike conventional LLMs that generate text token-by-token, text diffusion models <em>iteratively denoises corrupted sequences</em> to form coherent output.
+    And unlike conventional diffusion models, this implementation enables refinement <strong>without intermediate renoising!</strong>
   </p>
 
-  <h2>🚀 Live Demo</h2>
-  <p>Try the interactive version right here:</p>
+  <h2>✨ Unique features:</h2>
+  <ul>
+    <li><strong>Noiseless convergence:</strong> For simple questions, the model can converge without intermediate noising.</li>
+    <li><strong>Reduced inference cost:</strong> Many queries resolve in fewer steps than the output token length.</li>
+    <li><strong>Etremely efficient training:</strong> Finetuned via LoRA in a few hours on a single GPU.</li>
+  </ul>
 
+  <h2>✨ Diffusion features:</h2>
+  <ul>
+    <li><strong>Noiseless convergence:</strong> The model can converge without intermediate noising.</li>
+    <li><strong>Scalable test-time compute:</strong> More iterations improve response quality.</li>
+    <li><strong>Reduced inference cost:</strong> Many queries resolve in fewer steps than the output token length.</li>
+    <li><strong>Efficient training:</strong> Finetuned via LoRA in hours on a single GPU.</li>
+  </ul>
+
+  <h2>🚀 Live Demo</h2>
+  <p>Try it here:</p>
   <iframe
-    src="https://ruurd-tini.hf.space"
+    src="https://ruurd-tini-lad.hf.space"
     frameborder="0"
-    width="100%"
-    height="500"
+    width="50%"
+    height="300"
     style="border: 1px solid #ccc; border-radius: 8px;"
   ></iframe>
 
-  <h2>🔍 Features</h2>
+  <h2>🔧 Settings Overview</h2>
   <ul>
-    <li>Diffusion-style generation using structural token noise</li>
-    <li>LoRA-tuned on Alpaca, Alpaca-GPT4, and Clean-Instruct</li>
-    <li>Supports both unconditional and instruction-tuned variants</li>
+    <li><strong>Disable Intermediate Noising:</strong> Speeds up convergence for short, factual queries.</li>
+    <li><strong>Pause Between Steps:</strong> Slows the denoising process for visual clarity.</li>
+    <li><strong>Iterations:</strong> Controls how many refinement steps are performed.</li>
   </ul>
 
-  <h2>📊 Benchmark</h2>
-  <table>
-    <tr><th>Benchmark</th><th>Score</th></tr>
-    <tr><td>ARC-Easy</td><td>88.5</td></tr>
-    <tr><td>ARC-Challenge</td><td>81.0</td></tr>
-    <tr><td>MMLU</td><td>60.5</td></tr>
-    <tr><td>HellaSwag</td><td>70.0</td></tr>
-  </table>
+  <h2>🖍️ Visualization Legend</h2>
+  <ul>
+    <li><span style="color:red;">Red tokens</span>: Masked (noised) tokens to be regenerated.</li>
+    <li><span style="color:green;">Green tokens</span>: Newly generated tokens since last step.</li>
+  </ul>
 
-  <h2>🧪 Sample Output</h2>
-  <pre><code>
-Input       : [MASK] [MASK] [MASK] [MASK] [MASK] [MASK]
-Iteration 1 : The [MASK] of Lyon [MASK] is.
-Iteration 2 : [MASK] capital of France [MASK] [MASK].
-Iteration 3 : The capital of [MASK] is Paris.
-Final       : The capital of France is Paris.
-  </code></pre>
+  <h2>🧪 Example Prompts</h2>
+  <p><strong>Noiseless mode (short, factual):</strong><br/>
+    <code>What's the capital of France?</code></p>
 
-  <footer>
-    <p>MIT License. View the code on <a href="https://github.com/yourusername/diffusion-llama">GitHub</a>.</p>
-  </footer>
+  <p><strong>With intermediate noising (longer context):</strong><br/>
+    <code>What do you know about Amsterdam?</code></p>
+
+  <p>Tip: Try minimizing the number of iterations needed for a coherent answer!</p>
+
+<h2>📊 Preliminary benchmark scores</h2>
+<table>
+  <tr><th>Benchmark</th><th>Score</th></tr>
+  <tr><td>ARC-Easy</td><td>88.5</td></tr>
+  <tr><td>ARC-Challenge</td><td>81.0</td></tr>
+  <tr><td>MMLU</td><td>60.5</td></tr>
+  <tr><td>HellaSwag</td><td>70.0</td></tr>
+</table>
+
+<p><em>Note:</em> Scores were calculated only on a 200 random subset of each dataset, detailed benchmark will folow.</p>
+
+  <p>For a tweakable version with full inference parameters:<br/>
+    <a href="https://huggingface.co/spaces/Ruurd/tini" target="_blank">Explore the model here</a>
+  </p>
+
+<h2>📝 How to Cite</h2>
+<p>
+If you use this model or demo in your work, please cite the blog post:
+</p>
+
+<pre><code>
+@misc{kuiper2025lad,
+  author       = {Ruurd Kuiper and Maarten van Smeden and Lars de Groot and Ayoub Bagheri},
+  title        = {LAD: LlaMA Adapted Denoiser - A Diffusion-Based Language Model},
+  howpublished = {\url{https://your-github-io-url-or-blogpost-link}},
+  year         = {2025},
+  note         = {Blogpost, model and demo available online}
+}
+</code></pre>
+
+<p>
+We’ll update this section once the official paper is available.
+</p>
 
 </body>
 </html>
