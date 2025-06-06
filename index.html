@@ -31,11 +31,23 @@
       <a href="https://huggingface.co/spaces/Ruurd/tini-lad" target="_blank" class="button" style="background-color: #3B82F6; color: white;">Huggingface</a>
       <a href="https://huggingface.co/spaces/Ruurd/tini" target="_blank" class="button" style="background-color: #22C55E; color: white;">Extensive Demo</a>
       <a href="https://medium.com/ai-advances/think-before-you-speak-5611bcbbbd4c" target="_blank" class="button" style="background-color: #6B7280; color: white;">Read the Blogpost</a>
+        <p id="contact" style="font-size: 0.6rem; color: #666; margin-top: -1rem;"></p>
+        
+        <script>
+          const user = "r.j.a.kuiper";
+          const domain = "umcutrecht.nl";
+          const email = `${user}@${domain}`;
+          const link = `<a href="mailto:${email}">${email}</a>`;
+        
+          document.getElementById("contact").innerHTML =
+            `A full paper is forthcoming and will be submitted for peer review. For inquiries, contact us at ${link}.`;
+        </script>
     </div>
     
     <h2>Demonstration</h2>
     <iframe src="https://ruurd-tini-lad.hf.space"></iframe>
-    <p>Interact with the LAD model above to see it in action. 
+    <p style="font-size: 0.9rem; color: #555; max-width: 700px; margin: 0.5rem auto 2rem;">
+        Interact with the LAD model above to see it in action. 
         The demo is running the <strong>LAD 8B Instruct</strong> model, which has been 
         fine-tuned to follow user instructions. You can choose to add a short pause between
         iterations to visualize masked tokens (red) and generation (green).
@@ -52,7 +64,7 @@
         
     <h2>Motivation and Approach</h2>
     <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both flexible and efficient.</p>
-    <p>We introduce a novel approach that adapts pretrained LLaMA models for iterative, bidirectional sequence refinement. By repurposing these autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
+    <p>We introduce a novel approach that adapts pretrained LLaMA<sup><a href="#ref1">1</a></sup> models for iterative, bidirectional sequence refinement. By repurposing these autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
 
     <h2>Visualizing the Denoising Process</h2>
     
@@ -92,7 +104,7 @@
     <h2>Training and Efficiency</h2> 
     <p>The LAD 8B Instruct model was trained with an emphasis on extreme efficiency, which was accomplished by fine-tuning instead of training
         from scratch. We ran only 100,000 training iterations using a context length of 256 and a batch size of 8, which amounted to just 200 million 
-        training tokens. For comparison, Meta’s LLaMA 3 8B was trained on 15 trillion tokens, and comparable diffusion models trained from scratch such as LlaDa,
+        training tokens. For comparison, Meta’s LLaMA 3 8B was trained on 15 trillion tokens, and comparable diffusion models trained from scratch such as LlaDa<sup><a href="#ref2">2</a></sup>,
         used 2.3 trillion tokens. This means LAD used <strong>just 0.001% and 0.008%</strong> of their respective token counts.
     </p> 
     <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 (40GB) GPU.</strong> By employing a frozen Llama backbone with LoRA 
@@ -125,5 +137,12 @@
 
     <p>We welcome feedback and collaboration as we continue to develop and evaluate LAD.</p>
 
+
+<h2>References</h2>
+<ol>
+  <li id="ref1">Grattafiori, A., et al. (2024). <i>The Llama 3 Herd of Models</i>. <a href="https://arxiv.org/abs/2407.21783" target="_blank">arXiv:2407.21783</a>.</li>
+  <li id="ref2">Nie, S., et al. (2025). <i>Large Language Diffusion Models</i>. <a href="https://arxiv.org/abs/2502.09992" target="_blank">arXiv:2502.09992</a>.</li>
+</ol>
+    
 </body>
 </html>
