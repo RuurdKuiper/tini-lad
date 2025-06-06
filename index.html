@@ -50,24 +50,6 @@
     <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both flexible and efficient.</p>
     <p>We introduce a novel approach that adapts pretrained LLaMA models for iterative, bidirectional sequence refinement. By repurposing these autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
 
-    <h2>How LAD Works: Core Innovations</h2>
-    <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard 
-        causal attention mechanism of the frozen LLaMA transformer backbone to be fully bidirectional, allowing the model to consider the entire 
-        context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This 
-        parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources 
-        required for adaptation.</p>
-
-    <h2>Training and Efficiency</h2> 
-    <p>The LAD 8B Instruct model was trained with an emphasis on extreme efficiency. We ran only 100,000 training iterations 
-        using a context length of 256 and a batch size of 8—amounting to just 200 million training tokens. For comparison, Meta’s 
-        LLaMA 3 8B was trained on 15 trillion tokens, and the LlaDa diffusion model on 2.3 trillion, meaning LAD used <strong>just 0.001% 
-        and 0.008%</strong> of their respective token counts.
-    </p> 
-    <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 GPU.</strong> By employing a frozen Llama backbone with LoRA 
-        adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding 
-        the high computational costs of training from scratch or full-parameter finetuning.
-    </p>
-        
     <h2>Visualizing the Denoising Process</h2>
     
     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
@@ -88,9 +70,25 @@
         </p>
         
     </div>
-
-
     
+    <h2>How LAD Works: Core Innovations</h2>
+    <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard 
+        causal attention mechanism of the frozen LLaMA transformer backbone to be fully bidirectional, allowing the model to consider the entire 
+        context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This 
+        parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources 
+        required for adaptation.</p>
+
+    <h2>Training and Efficiency</h2> 
+    <p>The LAD 8B Instruct model was trained with an emphasis on extreme efficiency. We ran only 100,000 training iterations 
+        using a context length of 256 and a batch size of 8—amounting to just 200 million training tokens. For comparison, Meta’s 
+        LLaMA 3 8B was trained on 15 trillion tokens, and the LlaDa diffusion model on 2.3 trillion, meaning LAD used <strong>just 0.001% 
+        and 0.008%</strong> of their respective token counts.
+    </p> 
+    <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 GPU.</strong> By employing a frozen Llama backbone with LoRA 
+        adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding 
+        the high computational costs of training from scratch or full-parameter finetuning.
+    </p>
+            
     <h2>Preliminary Results</h2>
     
     <table>
