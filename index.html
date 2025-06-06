@@ -27,12 +27,24 @@
     <p><strong>Authors:</strong> Ruurd Kuiper<sup>1</sup>, Maarten van Smeden<sup>1</sup>, Lars de Groot<sup>1</sup>, Ayoub Bagheri<sup>2</sup></p>
     <p><sup>1</sup>UMC Utrecht &nbsp;&nbsp; <sup>2</sup>Utrecht University</p>
 
-    <a href="https://huggingface.co/spaces/Ruurd/tini-lad" target="_blank" class="button">Try the Demo on Hugging Face</a>
-    <a href="https://github.com/RuurdKuiper/lazy-diffusion" target="_blank" class="button">View Code on GitHub</a>
-    <a href="https://medium.com/ai-advances/think-before-you-speak-5611bcbbbd4c" target="_blank" class="button">Read the Blogpost</a>
+    <a href="https://huggingface.co/spaces/Ruurd/tini-lad" target="_blank" class="button" style="background-color: #3B82F6; color: white;">Try the Demo</a>
+    <a href="https://huggingface.co/spaces/Ruurd/tini" target="_blank" class="button" style="background-color: #22C55E; color: white;">Extensive Demo</a>
+    <a href="https://medium.com/ai-advances/think-before-you-speak-5611bcbbbd4c" target="_blank" class="button" style="background-color: #6B7280; color: white;">Read the Blogpost</a>
 
+    <h3>Core Innovations (TL;DR)</h3>
+    <ul>
+        <li><b>Efficient Adaptation:</b> Adapts large, frozen autoregressive models for diffusion-based generation, implementing bidirectional attention with lightweight LoRA adapters.</li>
+        <li><b>Structural Denoising:</b> Employs a unique training objective with masking and structural corruptions to enable full-sequence editing and error correction.</li>
+        <li><b>Noiseless Diffusion:</b> Structural corruptions during training enable diffusion without remasking for simpler questions, while still offering flexible test time compute increase for more complicated queries.</li>
+        <li><b>Unified Training:</b> Merges diffusion adaptation and instruction-tuning into a single, efficient phase by training directly on instruction datasets.</li>
+    </ul>
+        
+    <h2>Demonstration</h2>
+    <p>Interact with the LAD model below to see its generative capabilities in action. The demo is running the <strong>LAD 8B Instruct</strong> model, which has been fine-tuned to follow user instructions.</p>
+    <iframe src="https://ruurd-tini-lad.hf.space"></iframe>
+    
     <h2>Motivation and Approach</h2>
-    <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both efficient and robust.</p>
+    <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both flexible and efficient.</p>
     <p>We introduce a novel approach that adapts pretrained LLaMA 3.2 models for iterative, bidirectional sequence refinement. By repurposing these powerful autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
 
     <h2>How LAD Works: Core Innovations</h2>
@@ -42,10 +54,6 @@
     <h2>Training and Efficiency</h2>
     <p>LAD's training process is designed for efficiency and accessibility. We unify the diffusion adaptation and instruction-tuning into a single phase, training the LoRA adapters directly on moderately sized instruction datasets. For our unconditional models (LAD-U), we used a 200k sample subset of the SlimPajama dataset , while our instruction-tuned models (LAD-I) were trained on a 604k example corpus compiled from Alpaca, Clean-Instruct-3M, and alpaca-gpt4.</p>
     <p>The entire training for our 3B parameter models was completed in approximately 10 hours on a single NVIDIA L4 GPU (24GB). By leveraging a frozen backbone with LoRA adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding the high computational costs of training from scratch or full-parameter finetuning.</p>
-
-    <h2>Demonstration</h2>
-    <p>Interact with the LAD model below to see its generative capabilities in action. The demo is running the <strong>LAD 3B Instruct</strong> model, which has been fine-tuned to follow user instructions.</p>
-    <iframe src="https://ruurd-tini-lad.hf.space"></iframe>
 
     <h2>Visualizing the Denoising Process</h2>
     <figure>
