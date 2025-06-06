@@ -67,9 +67,7 @@
         adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding 
         the high computational costs of training from scratch or full-parameter finetuning.
     </p>
-    
-    <h2>Visualizing the Denoising Process</h2>
-    
+        
     <h2>Visualizing the Denoising Process</h2>
     
     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
@@ -86,7 +84,10 @@
       </figure>
     </div>
 
-
+    <p style="text-align: center; font-size: 0.9rem; color: #555; max-width: 700px; margin: 0.5rem auto 2rem;">
+      <strong>Color legend:</strong> Token shading reflects model confidence, ranging from red (low certainty) to green (high certainty). 
+        "MASK" refers to a masking token. Both models were initialized with only "MASK" tokens, although this is only apparent in the remasking version. 
+    </p>
     
     <h2>Preliminary Results</h2>
     
