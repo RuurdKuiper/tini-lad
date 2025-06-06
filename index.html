@@ -52,7 +52,7 @@
 
     <h2>How LAD Works: Core Innovations</h2>
     <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard 
-        causal attention mechanism of the frozen LLaMA 3.2 backbone to be fully bidirectional, allowing the model to consider the entire 
+        causal attention mechanism of the frozen LLaMA transformer backbone to be fully bidirectional, allowing the model to consider the entire 
         context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This 
         parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources 
         required for adaptation.</p>
@@ -63,7 +63,7 @@
         LLaMA 3 8B was trained on 15 trillion tokens, and the LlaDa diffusion model on 2.3 trillion, meaning LAD used <strong>just 0.001% 
         and 0.008%</strong> of their respective token counts.
     </p> 
-    <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 GPU.</strong> By leveraging a frozen backbone with LoRA 
+    <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 GPU.</strong> By employing a frozen Llama backbone with LoRA 
         adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding 
         the high computational costs of training from scratch or full-parameter finetuning.
     </p>
@@ -82,12 +82,14 @@
              style="width: 100%; height: 300px; object-fit: contain;">
         <figcaption><strong>Right:</strong> Denoising <em>without remasking</em>. Tokens are refined only once, reducing flexibility but speeding up inference.</figcaption>
       </figure>
+
+        <p>
+          Unlike autoregressive models that require one iteration per output token, LAD typically converges in fewer steps. Both examples below reach coherent outputs in less than the final output token length. Notably, the version without remasking converges in just 16 steps, while the remasked version continues refining up to 32 steps. Remasking enables improved final quality and scalable test-time compute, allowing users to trade off speed for fluency. This is exemplified by the slight error  in the more polished final sentence produced by the remasking model.
+        </p>
+        
     </div>
 
-    <p style="text-align: center; font-size: 0.9rem; color: #555; max-width: 700px; margin: 0.5rem auto 2rem;">
-      <strong>Color legend:</strong> Token shading reflects model confidence, ranging from red (low certainty) to green (high certainty). 
-        "MASK" refers to a masking token. Both models were initialized with only "MASK" tokens, although this is only apparent in the remasking version. 
-    </p>
+
     
     <h2>Preliminary Results</h2>
     
