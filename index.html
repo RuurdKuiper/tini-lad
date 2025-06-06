@@ -39,15 +39,15 @@
 
     <h3>Core Innovations (TL;DR)</h3>
     <ul>
-        <li><b>Efficient Adaptation:</b> Adapting autoregressive models for diffusion within <strong>only several hours of training on a single GPU.</strong></li>
-        <li><b>Flexible Inference:</b> Less diffusion steps are often necessary than the number of output tokens, but increasing iterations improves quality.</li>
-        <li><b>Structural Denoising:</b> Uses masking and structural noise (swaps, duplications) for full-sequence refinement.</li>
-        <li><b>Noiseless Refinement:</b> Enables iterative improvement of complete sequences <strong>without remasking tokens.</strong></li>
+        <li><b>Efficient Adaptation:</b> Adapting for diffusion with <strong>only several hours of training on a single GPU.</strong></li>
+        <li><b>Flexible Inference:</b> Often requires <strong>less steps than number of output tokens</strong>, but quality scales with test time compute.</li>
+        <li><b>Structural Denoising:</b> Uses masking and structural noise for <strong>full-sequence refinement</strong> in each step.</li>
+        <li><b>Noiseless Refinement:</b> Enables iterative improvement of complete sequences <strong>without remasking.</strong></li>
     </ul>
         
     <h2>Motivation and Approach</h2>
     <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both flexible and efficient.</p>
-    <p>We introduce a novel approach that adapts pretrained LLaMA 3.1 and 3.2 models for iterative, bidirectional sequence refinement. By repurposing these autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
+    <p>We introduce a novel approach that adapts pretrained LLaMA models for iterative, bidirectional sequence refinement. By repurposing these autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
 
     <h2>How LAD Works: Core Innovations</h2>
     <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard causal attention mechanism of the frozen LLaMA 3.2 backbone to be fully bidirectional, allowing the model to consider the entire context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources required for adaptation.</p>
