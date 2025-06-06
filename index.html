@@ -82,11 +82,11 @@
       </figure>
 
         <p style="text-align: center; font-size: 0.9rem; color: #555; max-width: 700px; margin: 0rem auto 1rem;">
-          <strong>Legend:</strong> Token shading reflects model confidence—ranging from red (low certainty) to green (high certainty). "MASK" refers to a masking token. Although not apparent from the right image, the denoising with remasking is also initialized with only "MASK" tokens.
+          <strong>Legend:</strong> Token shading reflects model confidence, ranging from red (low certainty) to green (high certainty). "MASK" refers to a masking token. Although not apparent from the right image, the denoising with remasking is also initialized with only "MASK" tokens.
         </p>
 
         <p>
-          Unlike autoregressive models that require one step per token, LAD often converges faster. Both examples below reach coherent outputs in fewer steps than the sequence length. The no-remasking version converges in 16 steps, while the remasked version refines up to 32. Remasking enables better final quality and scalable compute, exemplified by the slight error in the final sentence of the version that does not use remasking.
+          Unlike autoregressive models that require one step per token, LAD often converges in less iterations than its token output length. Both examples below reach coherent outputs in fewer steps than the sequence length. The no-remasking version converges in 16 steps, while the remasked version refines up to 32. Remasking enables better final quality and scalable compute, exemplified by the slight error in the final sentence of the version that does not use remasking.
         </p>
 
         
