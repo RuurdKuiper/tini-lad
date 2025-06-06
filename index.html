@@ -70,18 +70,22 @@
     
     <h2>Visualizing the Denoising Process</h2>
     
+    <h2>Visualizing the Denoising Process</h2>
+    
     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
       <figure style="flex: 1; min-width: 300px; max-width: 48%;">
-        <img src="figure_lad_remask.png" alt="With Remasking" style="width: 100%;">
-        <figcaption><strong>Left:</strong> Denoising with <em>remasking</em> after each step. Tokens are re-masked with decreasing frequency to allow iterative correction. The model replaces the masking tokens while also improving the remaining text.</figcaption>
+        <img src="figure_lad_remask.png" alt="With Remasking"
+             style="width: 100%; height: 300px; object-fit: contain;">
+        <figcaption><strong>Left:</strong> Denoising with <em>remasking</em> after each step. Tokens are re-masked with decreasing frequency to allow iterative correction.</figcaption>
       </figure>
     
       <figure style="flex: 1; min-width: 300px; max-width: 48%;">
-        <img src="figure_lad_noremask.png" alt="Without Remasking" style="width: 100%;">
-        <figcaption><strong>Right:</strong> Denoising <em>without remasking</em>. After initializing with mask tokens, the model improves the text directly without even without remasking tokens. This generally reduces flexibility but speeds up inference.</figcaption>
+        <img src="figure_lad_noremask.png" alt="Without Remasking"
+             style="width: 100%; height: 300px; object-fit: contain;">
+        <figcaption><strong>Right:</strong> Denoising <em>without remasking</em>. Tokens are refined only once, reducing flexibility but speeding up inference.</figcaption>
       </figure>
-    <p><em>Note:</em> In both cases, the number of iterations is shorter than the number of tokens, in contrast to autoregressive tokens where the number of iterations is equal to the number of output tokens.</p>
     </div>
+
 
     
     <h2>Preliminary Results</h2>
