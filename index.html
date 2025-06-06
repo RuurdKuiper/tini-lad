@@ -34,17 +34,21 @@
     </div>
     
     <h2>Demonstration</h2>
-    <p>Interact with the LAD model below to see its generative capabilities in action. The demo is running the <strong>LAD 8B Instruct</strong> model, which has been fine-tuned to follow user instructions.</p>
     <iframe src="https://ruurd-tini-lad.hf.space"></iframe>
+    <p>Interact with the LAD model above to see it in action. 
+        The demo is running the <strong>LAD 8B Instruct</strong> model, which has been 
+        fine-tuned to follow user instructions. You can choose to add a short pause between
+        iterations to visualize masked tokens (red) and generation (green).
+    </p>
 
-    <h3>Core Innovations (TL;DR)</h3>
-    <ul>
+    <h2>Core Innovations (TL;DR)</h2>
+    <ol>
         <li><b>Efficient Adaptation:</b> Adapting for diffusion with <em>only several hours of training on a single GPU.</em></li>
-        <li><b>Rapid Inference:</b> Often requires <em>less steps than number of output tokens</em> for simpler queries.
+        <li><b>Rapid Inference:</b> Often requires <em>less steps than number of output tokens</em> for simpler queries.</li>
         <li><b>Scalable test time compute:</b> Answer quality can be improved by <em>increasing iterations.</em></li>
         <li><b>Structural Denoising:</b> Uses masking and structural noise for <em>full-sequence refinement</em> in each step.</li>
         <li><b>Noiseless Refinement:</b> Enables iterative improvement of complete sequences <em>without remasking.</em></li>
-    </ul>
+    </ol>
         
     <h2>Motivation and Approach</h2>
     <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both flexible and efficient.</p>
@@ -77,19 +81,21 @@
     </div>
     
     <h2>How LAD Works: Core Innovations</h2>
-    <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard 
+    <p>The core of LAD is its <strong>combined structural and masked training objective which enables flexible inference</strong>. We modify the standard 
         causal attention mechanism of the frozen LLaMA transformer backbone to be fully bidirectional, allowing the model to consider the entire 
         context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This 
         parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources 
-        required for adaptation.</p>
+        required for adaptation. <strong>By our knowledge, this is the first time it has been shown that an autoregressive model can be transformed for diffusive
+        generation using solely LoRA finetuning.</strong>
+    </p>
 
     <h2>Training and Efficiency</h2> 
-    <p>The LAD 8B Instruct model was trained with an emphasis on extreme efficiency. We ran only 100,000 training iterations 
-        using a context length of 256 and a batch size of 8—amounting to just 200 million training tokens. For comparison, Meta’s 
-        LLaMA 3 8B was trained on 15 trillion tokens, and the LlaDa diffusion model on 2.3 trillion, meaning LAD used <strong>just 0.001% 
-        and 0.008%</strong> of their respective token counts.
+    <p>The LAD 8B Instruct model was trained with an emphasis on extreme efficiency, which was accomplished by fine-tuning instead of training
+        from scratch. We ran only 100,000 training iterations using a context length of 256 and a batch size of 8, which amounted to just 200 million 
+        training tokens. For comparison, Meta’s LLaMA 3 8B was trained on 15 trillion tokens, and comparable diffusion models trained from scratch such as LlaDa,
+        used 2.3 trillion tokens. This means LAD used <strong>just 0.001% and 0.008%</strong> of their respective token counts.
     </p> 
-    <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 GPU.</strong> By employing a frozen Llama backbone with LoRA 
+    <p>Training was completed in approximately <strong>10 hours on a single NVIDIA A100 (40GB) GPU.</strong> By employing a frozen Llama backbone with LoRA 
         adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding 
         the high computational costs of training from scratch or full-parameter finetuning.
     </p>
@@ -97,7 +103,7 @@
     <h2>Preliminary Results</h2>
     
     <table>
-      <tr><th>Benchmark</th><th>Score</th></tr>
+      <tr><th>Benchmark</th><th>Score (% correct)</th></tr>
       <tr><td>ARC-Easy</td><td>88.5</td></tr>
       <tr><td>ARC-Challenge</td><td>81.0</td></tr>
       <tr><td>MMLU</td><td>60.5</td></tr>
