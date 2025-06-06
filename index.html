@@ -1,111 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LAD: LLaMA Adapted Denoiser</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LAD: LoRA-Adapted Denoiser</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; max-width: 800px; margin: auto; line-height: 1.6; padding: 2rem; background-color: #ffffff; color: #333; }
+        h1, h2, h3 { color: #222; font-weight: 600; }
+        p { margin-bottom: 1rem; }
+        a.button { display: inline-block; padding: 10px 18px; margin: 0.5rem 0.5rem 0.5rem 0; background-color: #f5f5f5; color: #333; border-radius: 6px; border: 1px solid #ccc; text-decoration: none; transition: background-color 0.3s; }
+        a.button:hover { background-color: #e0e0e0; }
+        iframe { border: 1px solid #ccc; border-radius: 8px; width: 100%; height: 500px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+        code, pre { background: #f0f0f0; padding: 0.5em; border-radius: 4px; display: block; overflow-x: auto; }
+        figure { text-align: center; margin: 2rem 0; }
+        figcaption { font-size: 0.9rem; color: #666; margin-top: 0.5rem; }
+    </style>
 </head>
 <body>
 
-  <h1>LAD: LLaMA Adapted Denoiser</h1>
+    <h1>LAD: LoRA-Adapted Denoiser</h1>
 
-  <div style="text-align: center; margin-bottom: 2rem;">
-  <p><strong>Ruurd Kuiper</strong><sup>1</sup>, <strong>Maarten van Smeden</strong><sup>1</sup>, <strong>Lars de Groot</strong><sup>1</sup>, <strong>Ayoub Bagheri</strong><sup>2</sup></p>
-  <p><sup>1</sup>University Medical Center Utrecht — <sup>2</sup>Utrecht University</p>
-  </div>
-  <div style="text-align: center; margin: 1.5rem 0;">
-  <a href="https://huggingface.co/spaces/Ruurd/tini" target="_blank" style="padding: 10px 18px; margin: 0 10px; background-color: #f5f5f5; color: #333; border-radius: 6px; border: 1px solid #ccc; text-decoration: none;">Try on Hugging Face</a>
-  </div>
+    <p><strong>Authors:</strong> Ruurd Kuiper<sup>1</sup>, Maarten van Smeden<sup>1</sup>, Lars de Groot<sup>1</sup>, Ayoub Bagheri<sup>2</sup></p>
+    <p><sup>1</sup>UMC Utrecht &nbsp;&nbsp; <sup>2</sup>Utrecht University</p>
 
-  <p><strong>Note:</strong> Paper coming out soon. If you're interested in discussing the model, feel free to reach out.</p>
+    <a href="https://huggingface.co/spaces/Ruurd/tini-lad" target="_blank" class="button">Try the Demo on Hugging Face</a>
+    <a href="https://github.com/RuurdKuiper/lazy-diffusion" target="_blank" class="button">View Code on GitHub</a>
+    <a href="https://medium.com/ai-advances/think-before-you-speak-5611bcbbbd4c" target="_blank" class="button">Read the Blogpost</a>
 
-  <p>
-    This is an interactive demo of a <strong>diffusion-style language model</strong> built on LLaMA 3.1 8B and fine-tuned with LoRA adapters.
-    Unlike conventional LLMs that generate text token-by-token, text diffusion models iteratively denoise corrupted sequences to form coherent output.
-    And unlike conventional diffusion models, this implementation enables refinement <strong>without intermediate renoising!</strong>
-  </p>
+    <h2>Motivation and Approach</h2>
+    <p>Autoregressive models, while powerful, are constrained by a strict left-to-right generation process that limits efficiency and bidirectional reasoning. Diffusion-based models offer a promising, flexible alternative but have faced challenges in adapting to discrete text data. LAD (LoRA-Adapted Denoiser) was created to bridge this gap, offering a framework for non-autoregressive generation that is both efficient and robust.</p>
+    <p>We introduce a novel approach that adapts pretrained LLaMA 3.2 models for iterative, bidirectional sequence refinement. By repurposing these powerful autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
 
-  <h2>Live Demo</h2>
-  <iframe
-    src="https://ruurd-tini-lad.hf.space"
-    frameborder="0"
-    width="100%"
-    height="500"
-    style="border: 1px solid #ccc; border-radius: 8px;"
-  ></iframe>
+    <h2>How LAD Works: Core Innovations</h2>
+    <p>The core of LAD is its unique training objective and flexible inference. We modify the standard causal attention mechanism of the frozen LLaMA 3.2 backbone to be fully bidirectional, allowing the model to consider the entire context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources required for adaptation.</p>
+    <p>A key innovation is our <strong>structural denoising objective</strong>. Instead of only using masking, we corrupt training data with a combination of masking and structural perturbations like token swaps, duplications, and span shifts. These corruptions mimic residual errors common in generative processes, training the model to perform holistic sequence editing. Unlike standard masked diffusion models that lock tokens once they are unmasked, LAD's method allows for the entire sequence to be refined throughout the denoising process, enabling superior error correction and fluency.</p>
 
-  <h2>Features:</h2>
-  <h4>Unique to this model</h4>
-  <ul>
-    <li><strong>Noiseless convergence:</strong> For simple questions, the model can converge without intermediate noising.</li>
-    <li><strong>Reduced inference cost:</strong> Many queries resolve in fewer steps than the output token length.</li>
-    <li><strong>Etremely efficient training:</strong> Finetuned via LoRA in a few hours on a single GPU.</li>
-  </ul>
+    <h2>Training and Efficiency</h2>
+    <p>LAD's training process is designed for efficiency and accessibility. We unify the diffusion adaptation and instruction-tuning into a single phase, training the LoRA adapters directly on moderately sized instruction datasets. For our unconditional models (LAD-U), we used a 200k sample subset of the SlimPajama dataset , while our instruction-tuned models (LAD-I) were trained on a 604k example corpus compiled from Alpaca, Clean-Instruct-3M, and alpaca-gpt4.</p>
+    <p>The entire training for our 3B parameter models was completed in approximately 10 hours on a single NVIDIA L4 GPU (24GB). By leveraging a frozen backbone with LoRA adapters, LAD significantly lowers the barrier to entry for training powerful, non-autoregressive text models, avoiding the high computational costs of training from scratch or full-parameter finetuning.</p>
 
-  <h4>Inherent diffusion features:</h4>
-  <ul>
-    <li><strong>Scalable test-time compute:</strong> More iterations improve response quality.</li>
-    <li><strong>Reverse reasoning:</strong> Supports non-sequential updates, allowing reasoning from right to left.</li>
-    <li><strong>Error correction:</strong> Initial erroneous tokens can be corrected.</li>
-  </ul>
+    <h2>Demonstration</h2>
+    <p>Interact with the LAD model below to see its generative capabilities in action. The demo is running the <strong>LAD 3B Instruct</strong> model, which has been fine-tuned to follow user instructions.</p>
+    <iframe src="https://ruurd-tini-lad.hf.space"></iframe>
 
-  <h2>🔧 Settings Overview</h2>
-  <ul>
-    <li><strong>Disable Intermediate Noising:</strong> Speeds up convergence for short, factual queries.</li>
-    <li><strong>Pause Between Steps:</strong> Slows the denoising process for visual clarity.</li>
-    <li><strong>Iterations:</strong> Controls how many refinement steps are performed.</li>
-  </ul>
+    <h2>Visualizing the Denoising Process</h2>
+    <figure>
+        <img src="figure2_lad.png" alt="Iterative Denoising Visualization" style="width: 100%; max-width: 700px;">
+        <figcaption><strong>Figure 2:</strong> Iterative denoising with the LAD 3B Instruct model. Starting from a fully masked input, the text is progressively refined over multiple steps. The color intensity of the tokens reflects the model's confidence. Note that structural noising is used during training but not during this inference process.</figcaption>
+    </figure>
 
-  <h2>🖍️ Visualization Legend</h2>
-  <ul>
-    <li><span style="color:red;">Red tokens</span>: Masked (noised) tokens to be regenerated.</li>
-    <li><span style="color:green;">Green tokens</span>: Newly generated tokens since last step.</li>
-  </ul>
+    <h2>Preliminary Results</h2>
+    <p>Our initial results demonstrate the viability of the LAD framework. For our unconditional models, the inclusion of structural noise during training led to improved perplexity, with the LAD-U 3B model achieving a median perplexity of 31.51. The larger 3B parameter model consistently outperformed the 1B version, indicating that the approach scales effectively. Output diversity remained high across models, with distinct 2-gram fractions comparable to the training data.</p>
+    <p>In our instruction-tuned models, we observed an interesting trade-off related to the LoRA adapter's rank. The LAD-I model with a lower rank (64r) achieved higher accuracy on lexical benchmarks like ARC-Easy (82.00%) and MMLU (44.00%) compared to the higher-rank model (512r). Conversely, the higher-rank model produced text with lower perplexity, suggesting it had greater generative fluency. This indicates that LoRA capacity can be tuned to balance task-specific accuracy and general text quality.</p>
 
-  <h2>🧪 Example Prompts</h2>
-  <p><strong>Noiseless mode (short, factual):</strong><br/>
-    <code>What's the capital of France?</code></p>
 
-  <p><strong>With intermediate noising (longer context):</strong><br/>
-    <code>What do you know about Amsterdam?</code></p>
+    <h2>Citation</h2>
+    <p>A full paper is forthcoming and will be submitted for peer review. In the meantime, if you use LAD in your work, please cite this preliminary version:</p>
+    <pre><code>@misc{kuiper2025lad,
+      author       = {Ruurd Kuiper and Maarten van Smeden and Lars de Groot and Ayoub Bagheri},
+      title        = {LAD: LoRA-Adapted Denoiser},
+      year         = {2025},
+      howpublished = {\url{https://ruurdkuiper.github.io/tini-lad/}},
+      note         = {Work in progress}
+}</code></pre>
 
-  <p>Tip: Try minimizing the number of iterations needed for a coherent answer!</p>
-
-<h2>📊 Preliminary benchmark scores</h2>
-<table>
-  <tr><th>Benchmark</th><th>Score</th></tr>
-  <tr><td>ARC-Easy</td><td>88.5</td></tr>
-  <tr><td>ARC-Challenge</td><td>81.0</td></tr>
-  <tr><td>MMLU</td><td>60.5</td></tr>
-  <tr><td>HellaSwag</td><td>70.0</td></tr>
-</table>
-
-<p><em>Note:</em> Scores were calculated only on a 200 random subset of each dataset, detailed benchmark will folow.</p>
-
-  <p>For a tweakable version with full inference parameters:<br/>
-    <a href="https://huggingface.co/spaces/Ruurd/tini" target="_blank">Explore the model here</a>
-  </p>
-
-<h2>📝 How to Cite</h2>
-<p>
-If you use this model or demo in your work, please cite the blog post:
-</p>
-
-<pre><code>
-@misc{kuiper2025lad,
-  author       = {Ruurd Kuiper, Maarten van Smeden, Lars de Groot and Ayoub Bagheri},
-  title        = {LAD: LlaMA Adapted Denoiser - A Diffusion-Based Language Model},
-  howpublished = {\url{https://ruurdkuiper.github.io/tini-lad/}},
-  year         = {2025},
-  note         = {Blogpost, model and demo available online}
-}
-</code></pre>
-
-<p>
-We’ll update this section once the official paper is available.
-</p>
+    <p>We welcome feedback and collaboration as we continue to develop and evaluate LAD.</p>
 
 </body>
 </html>
