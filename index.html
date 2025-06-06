@@ -40,7 +40,8 @@
     <h3>Core Innovations (TL;DR)</h3>
     <ul>
         <li><b>Efficient Adaptation:</b> Adapting for diffusion with <strong>only several hours of training on a single GPU.</strong></li>
-        <li><b>Flexible Inference:</b> Often requires <strong>less steps than number of output tokens</strong>, but quality scales with test time compute.</li>
+        <li><b>Rapid Inference:</b> Often requires <strong>less steps than number of output tokens</strong> for simpler queries.
+        <li><b>Scalable test time compute:</b>Answer quality of more difficult questions can be improved by increasing iterations.</li>
         <li><b>Structural Denoising:</b> Uses masking and structural noise for <strong>full-sequence refinement</strong> in each step.</li>
         <li><b>Noiseless Refinement:</b> Enables iterative improvement of complete sequences <strong>without remasking.</strong></li>
     </ul>
@@ -50,7 +51,11 @@
     <p>We introduce a novel approach that adapts pretrained LLaMA models for iterative, bidirectional sequence refinement. By repurposing these autoregressive models, LAD benefits from their extensive world knowledge while breaking free from their sequential decoding limitations. This is achieved without costly full-model retraining, making it a practical solution for developing advanced generative capabilities.</p>
 
     <h2>How LAD Works: Core Innovations</h2>
-    <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard causal attention mechanism of the frozen LLaMA 3.2 backbone to be fully bidirectional, allowing the model to consider the entire context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources required for adaptation.</p>
+    <p>The core of LAD is its combined structural and masked training objective which enables flexible inference. We modify the standard 
+        causal attention mechanism of the frozen LLaMA 3.2 backbone to be fully bidirectional, allowing the model to consider the entire 
+        context of the sequence at once. On top of this frozen base, we train lightweight Low-Rank Adaptation (LoRA) adapters. This 
+        parameter-efficient approach preserves the original model's knowledge while drastically reducing the computational resources 
+        required for adaptation.</p>
 
     <h2>Training and Efficiency</h2> 
     <p>The LAD 8B Instruct model was trained with an emphasis on extreme efficiency. We ran only 100,000 training iterations 
