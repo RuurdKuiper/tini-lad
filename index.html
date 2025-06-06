@@ -65,9 +65,14 @@
         <figcaption><strong>Right:</strong> Denoising <em>without remasking</em>. Tokens are refined only once, reducing flexibility but speeding up inference.</figcaption>
       </figure>
 
-        <p>
-          Unlike autoregressive models that require one iteration per output token, LAD typically converges in fewer steps. Both examples below reach coherent outputs in less than the final output token length. Notably, the version without remasking converges in just 16 steps, while the remasked version continues refining up to 32 steps. Remasking enables improved final quality and scalable test-time compute, allowing users to trade off speed for fluency. This is exemplified by the slight error  in the more polished final sentence produced by the remasking model.
+        <p style="text-align: center; font-size: 0.9rem; color: #555; max-width: 700px; margin: 0.5rem auto 2rem;">
+          <strong>Legend:</strong> Token shading reflects model confidence—ranging from red (low certainty) to green (high certainty). "MASK" refers to a masking token. Although not apparent from the right image, the denoising with remasking is also initialized with only "MASK" tokens.
         </p>
+
+        <p>
+          Unlike autoregressive models that require one step per token, LAD often converges faster. Both examples below reach coherent outputs in fewer steps than the sequence length. The no-remasking version converges in 16 steps, while the remasked version refines up to 32. Remasking enables better final quality and scalable compute, exemplified by the slight error in the final sentence of the version that does not use remasking.
+        </p>
+
         
     </div>
     
