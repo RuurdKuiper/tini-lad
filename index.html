@@ -30,18 +30,20 @@
     
       <a href="https://huggingface.co/spaces/Ruurd/tini-lad" target="_blank" class="button" style="background-color: #3B82F6; color: white;">Huggingface</a>
       <a href="https://huggingface.co/spaces/Ruurd/tini" target="_blank" class="button" style="background-color: #22C55E; color: white;">Extensive Demo</a>
+      <a href="https://openreview.net/pdf?id=h8Zo1K6zpY" target="_blank" class="button" style="background-color: #8B5CF6; color: white;">Read the paper</a>
       <a href="https://www.youtube.com/watch?v=qy8saQXV_LM" target="_blank" class="button" style="background-color: #ff6347; color: white;">Watch the video</a>
       <a href="https://medium.com/ai-advances/think-before-you-speak-5611bcbbbd4c" target="_blank" class="button" style="background-color: #6B7280; color: white;">Read the Blogpost</a>
-        <p id="contact" style="font-size: 0.6rem; color: #666; margin-top: 0.5rem;"></p>
+        <p id="contact" style="font-size: 0.7rem; color: #666; margin-top: 0.5rem;"></p>
         
         <script>
           const user = "r.j.a.kuiper";
           const domain = "umcutrecht.nl";
           const email = `${user}@${domain}`;
           const link = `<a href="mailto:${email}">${email}</a>`;
+          const paper = 
         
           document.getElementById("contact").innerHTML =
-            `A full paper is forthcoming and will be submitted for peer review. For inquiries, contact us at ${link}.`;
+            `Our paper on LAD has been accepted at EMNLP 2025, and can already be found <a href="https://openreview.net/pdf?id=h8Zo1K6zpY" target="_blank"></a>here</li>! For inquiries, contact us at ${link}.`;
         </script>
     </div>
     
@@ -127,13 +129,14 @@
 
 
     <h2>Citation</h2>
-    <p>A full paper is forthcoming and will be submitted for peer review. In the meantime, if you use LAD in your work, please cite this preliminary version:</p>
-    <pre><code>@misc{kuiper2025lad,
-      author       = {Ruurd Kuiper and Maarten van Smeden and Lars de Groot and Ayoub Bagheri},
-      title        = {LAD: LoRA-Adapted Denoiser},
-      year         = {2025},
-      howpublished = {\url{https://ruurdkuiper.github.io/tini-lad/}},
-      note         = {Work in progress}
+    <p>The first publication has been accepted at EMNLP 2025 and will be presented there. You can find the paper <a href="https://openreview.net/pdf?id=h8Zo1K6zpY" target="_blank"></a>here</li>, and you can cite it as:</p>
+    <pre><code>@inproceedings{
+    kuiper2025lad,
+    title={{LAD}: Lo{RA}-Adapted Diffusion},
+    author={Ruurd Jan Anthonius Kuiper and Maarten van Smeden and Lars de Groot and Bram van Es and Ayoub Bagheri},
+    booktitle={The 2025 Conference on Empirical Methods in Natural Language Processing - System demonstrations},
+    year={2025},
+    url={https://openreview.net/forum?id=h8Zo1K6zpY}
 }</code></pre>
 
     <p>We welcome feedback and collaboration as we continue to develop and evaluate LAD.</p>
