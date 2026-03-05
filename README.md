@@ -1,6 +1,6 @@
 # Diffusion Language Modeling with LoRA-Adapted Diffusion (LAD)
 
-Note: Paper coming out soon; if anyone is interested in discussing the model, please contact me.
+Note: Paper available [here](https://aclanthology.org/2025.emnlp-demos.8/), and more info and demo's [here](https://ruurdkuiper.github.io/tini-lad/)!
 
 ## Overview
 This project introduces a **diffusion-style language model** built upon **LLaMA 3.1 8B**, fine-tuned using **LoRA adapters** and a **unique (de-)noising schedule**. Unlike conventional autoregressive models, this approach employs diffusion to generate text. And unlike conventional diffusion, this approach enables **noiseless** refinement.
